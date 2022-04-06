@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- breadcrumb Wrapper Start -->
+<div class="breadcrumb-wrapper">
+  <div class="container">
+    <div class="banner-title">
+      <h2 style="color: black;">Login / Sign Up</h2>
+      <div class="line"> <span></span></div>
+    </div>
+    <ul class="inner-breadcrumb">
+      <li><a href="index.html">Home</a></li>
+      <!-- <li>Login / Sign Up</li> -->
+      <li>Recruiter Login / Sign Up</li>
+    </ul>
+  </div>
+</div>
+<!-- breadcrumb Wrapper End --> 
+<!-- Inner page Wrapper Start -->
+<div class="inner-page-wrapper registration-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="login-container">
+          <div class="loginbox">
+            <div class="loginbox-title">Login in using social accounts</div>
+            <ul class="social-network social-circle onwhite">
+              <li><a href="javascript:void(0)" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="javascript:void(0)" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="javascript:void(0)" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+              <li><a href="javascript:void(0)" class="icoLinkedin" title="Linkedin +"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+            <div class="loginbox-or">
+              <div class="or-line"></div>
+              <div class="or">OR</div>
+            </div>
+            
+            <!-- login form -->
+            <form method="post" action="{% url 'login_url' %}" class="form-group">
+              {% csrf_token %}
+            <div class="form-group">
+              <label>Email: <span class="required">*</span></label>
+              <input name="email" placeholder="email" class="form-control" type="text">
+            </div>
+            <div class="form-group">
+              <label>Password: <span class="required">*</span></label>
+              <input name="password" placeholder="password" class="form-control" type="password">
+            </div>
+            <div class="loginbox-forgot"> <a href="">Forgot Password?</a> </div>
+            <div class="loginbox-submit">
+              <!-- <input class="btn btn-default btn-block" value="Login" type="button"> -->
+              <button class="btn btn-default btn-block" type="submit">Login</button>
+            </div>
+            </form>
+
+            <div class="loginbox-signup"> <a href="javascript:void(0)">Sign Up With Email</a> </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="login-container">
+          <div class="loginbox">
+
+            {% if user_error %}
+           
+              <div class="loginbox-title">{{user_error}}</div>
+            
+            {% endif %}
+
+            <!-- register form -->
+            <form method="post" action="{% url 'recruiter_signup_url' %}" class="">
+              {% csrf_token %}
+            <div class="form-group">
+              <label>Company Name: <span class="required">*</span></label>
+              <input name="company_name" value="{{static_username}}" placeholder="company name" class="form-control" type="text">
+            </div>
+            <div class="form-group">
+              <label>Email: <span class="required">*</span></label>
+              <input name="email" value="{{static_mail}}" placeholder="email" class="form-control" type="email">
+            </div>
+            <div class="form-group">
+              <label>Password: <span class="required">*</span></label>
+              <input name="password" placeholder="password" class="form-control" type="password">
+            </div>
+            <div class="form-group">
+              <label>Confirm Password: <span class="required">*</span></label>
+              <input name="confirm_psd" placeholder="confirm password" class="form-control" type="password">
+            </div>
+            <div class="loginbox-forgot">
+              <input type="checkbox" name="terms-condition">
+              I accept <a href="">Term and consitions?</a> </div>
+            <div class="loginbox-submit">
+              <!-- <input class="btn btn-default btn-block" value="Register  new" type="button"> -->
+              <button class="btn btn-default btn-block" type="submit">Register</button>
+            </div>
+            <div class="loginbox-signup"> Already have account <a href="javascript:void(0)">Sign in</a> </div>
+          </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Inner page Wrapper End --> 
+
+{% endblock %}
+

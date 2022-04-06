@@ -1,0 +1,305 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Recruiter Profile
+{% endblock %}
+
+{% block sidebar %}
+{% include 'recruiter/sidebar.html' %}
+{% endblock %}
+
+
+{% comment %} {% block styles %}
+    
+{% endblock %}   {% endcomment %}
+
+
+{% block content %}
+<section class="section" unicorn:view>
+    
+    <div class="row ">
+
+        <div class="col-12 col-md-6 col-lg-6">
+    {% comment %} form start {% endcomment %}
+        <form>
+            <div class="card">
+              <div class="card-header">
+                <h4>Post Your Jobs
+                </h4>
+              </div>
+              <div class="card-body">
+
+                <div class="form-group">
+                  <label>Job Title</label>
+                  <input unicorn:model.defer="job_title" type="text" class="form-control" required>
+                  {% for message in messages  %}
+                    {% if message.tags == 'jobtitle error' %}
+
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    
+                    {% endif %}
+                    {% endfor %}
+                  <div class="invalid-feedback">
+                    {{ unicorn.errors.job_title.0.message }}
+                </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputEmail4">Minimum Experience</label>
+                      <input type="number" unicorn:model.defer="min_exp" min="0" max="20" class="form-control" id="inputPassword4" placeholder="Minimum Experience">
+                    {% for message in messages  %}
+                    {% comment %} case-1 {% endcomment %}
+                    {% if message.tags == 'min_exp error' %}
+
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    {% endif %}
+
+                     {% comment %} case-2 {% endcomment %}
+                     {% if message.tags == 'min_exp_case2 error' %}
+
+                     <span style="color:red;">{{ message }}
+                     </span>
+                         
+                     {% endif %}
+
+                    {% endfor %}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputPassword4">Maximum Experience</label>
+                      <input type="number" unicorn:model.defer="max_exp" min="0" max="20" class="form-control" id="inputPassword4" placeholder="Maximum Experience">
+                    {% for message in messages  %}
+
+                    {% comment %} case-1 {% endcomment %}
+                    {% if message.tags == 'max_exp error' %}
+
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    {% endif %}
+
+                    {% comment %} case-2 {% endcomment %}
+                    {% if message.tags == 'max_exp_case2 error' %}
+
+                     <span style="color:red;">{{ message }}
+                     </span>
+                         
+                     {% endif %}
+
+                    {% endfor %}
+                    </div>
+                  </div>
+
+                
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputEmail4">Minimum Salary</label>
+                      <input type="number" unicorn:model.defer="min_salary" min="7000" max="" class="form-control" id="inputPassword4" placeholder="Minimum Experience">
+                      {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'min_salary error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% comment %} case-2 {% endcomment %}
+                      {% if message.tags == 'min_salary_case2 error' %}
+  
+                       <span style="color:red;">{{ message }}
+                       </span>
+                           
+                       {% endif %}
+  
+                      {% endfor %}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputPassword4">Maximum Salary</label>
+                      <input type="number" unicorn:model.defer="max_salary" min="7000" max="" class="form-control" id="inputPassword4" placeholder="Maximum Experience">
+                      {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'max_salary error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% comment %} case-2 {% endcomment %}
+                      {% if message.tags == 'max_salary_case2 error' %}
+  
+                       <span style="color:red;">{{ message }}
+                       </span>
+                           
+                       {% endif %}
+  
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Location</label>
+                    <input unicorn:model.defer="location" type="text" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+                    {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'location error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% endfor %}
+                    <div class="invalid-feedback">
+                        {{ unicorn.errors.company_name.0.message }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Descripiton</label>
+                    <textarea unicorn:model.defer="descripiton" cols="30" rows="10" class="form-control {% if unicorn.errors.description %} is-invalid {% endif %}" required=""></textarea>
+                    {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'descripiton error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% endfor %}
+                    <div class="invalid-feedback">
+                        {{ unicorn.errors.description.0.message }}
+                    </div>
+                </div>
+
+              </div>
+            </div>
+
+        
+        </div>
+
+        {% comment %} form continue {% endcomment %}
+        <div class="col-12 col-md-6 col-lg-6">
+            
+            <div class="card">
+
+                <div class="card-body">
+                    
+                    <div style="margin-top:50px;" class="form-group">
+                        <label>Qualification</label>
+                        <input type="text" unicorn:model.defer="qualification" class="form-control">
+                      {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'qualification error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% endfor %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Certification</label>
+                        <input type="text" unicorn:model.defer="certification" class="form-control">
+                      {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'certification error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Vacancies</label>
+                        <input type="Number" unicorn:model.defer="vacancies" min="1" max="" class="form-control">
+                      {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'vacancies error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% comment %} case-2 {% endcomment %}
+                      {% if message.tags == 'vacancies_case2 error' %}
+  
+                       <span style="color:red;">{{ message }}
+                       </span>
+                           
+                       {% endif %}
+  
+                      {% endfor %}
+                    </div>
+
+                    <div style="margin-bottom:67px;" class="form-group">
+                        <label>Closing Date</label>
+                        <input type="date" unicorn:model.defer="closing_date" id="date_validator" class="form-control">
+                      {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'closing_date error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% endfor %}
+                    </div>
+
+                
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary" unicorn:click.prevent="save()">Add</button>
+                    </div>
+                 
+  
+               
+                </div>
+
+           
+              
+            </div>
+        </form>
+    {% comment %} form end {% endcomment %}
+
+          
+        
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+{% comment %} datepicker 1 {% endcomment %}
+{% comment %} <script>
+   
+        //enableTime: true,
+        //altInput: true,
+        //minDate: "today",
+        //altFormat: 'F j, Y (h:S K)',
+        //theme: "material_blue", 
+
+    flatpickr("#date_validator", {
+        altInput: true,
+        minDate: "today"
+    });
+
+    flatpickr("#time_validator", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "h:S K"
+    }); 
+
+    
+</script> {% endcomment %}
+
+{% endblock %}

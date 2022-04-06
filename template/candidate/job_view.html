@@ -1,0 +1,155 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Candidate Profile
+{% endblock %}
+
+{% block sidebar %}
+{% include 'candidate/sidebar.html' %}
+{% endblock %}
+
+
+{% comment %} {% block styles %}
+    
+{% endblock %}   {% endcomment %}
+
+
+{% block content %}
+<section class="section" unicorn:view>
+    
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="padding-20">
+              
+            <ul class="nav nav-tabs" id="myTab2" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#about" role="tab"
+                  aria-selected="true">Details</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#settings" role="tab"
+                  aria-selected="false">Setting</a>
+              </li> -->
+            </ul>
+
+            <div class="tab-content tab-bordered" id="myTab3Content">
+
+              <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab2">
+                
+                <div class="section-title"><span>{{ job_db.job_title }}</span> - <span>{{ job_db.recruiter_id.company_name }}</span>
+                    
+                    {% if applications_db.status == 'applied' %}
+                    <label style="margin-left: 10px;border-radius: 100px;" class="btn btn-success">Applied
+                        <i style="margin-left: 15px;" class="fas fa-check-circle"></i>
+                    </label>
+                    {% endif %}
+                </div>
+                <div class="row">
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Company</strong>
+                    <br>
+                    <p class="text-muted">{{ job_db.recruiter_id.company_name }}</p>
+                  </div>
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Experience</strong>
+                    <br>
+                    <p class="text-muted"><span>{{ job_db.min_experience }}</span> - <span>{{ job_db.max_experience }}</span> Years</p>
+                  </div>
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Salary</strong>
+                    <br>
+                    <p class="text-muted"><span>{{ job_db.min_salary }}</span> - <span>{{ job_db.max_salary }}</span></p>
+                  </div>
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Closing Date</strong>
+                    <br>
+                    <p class="text-muted">{{ job_db.closing_date }}</p>
+                  </div>
+                  <div class="col-md-3 col-6">
+                    <strong>Location</strong>
+                    <br>
+                    <p class="text-muted">{{ job_db.location }}</p>
+                  </div>
+                  <div class="col-md-3 col-6">
+                    <strong>Vacancies</strong>
+                    <br>
+                    <p class="text-muted">{{ job_db.vacancies_no }}</p>
+                  </div>
+                </div>
+
+                  <div class="section-title">Job description</div>
+
+                <p class="m-t-30">{{ job_db.discription }}</p>
+                
+                <div class="section-title">Education</div>
+                <ul>
+                  <li>{{ job_db.qualification }}</li>
+                </ul>
+
+                {% if job_db.certification %}
+                <div class="section-title">Certification</div>
+                <ul>
+                  <li>{{ job_db.certification }}</li>
+                </ul>
+                {% endif%}
+
+
+                <div class="section-title">Contact</div>
+                <ul>
+                    <li>{{ job_db.recruiter_id.email }}</li>
+                    <li>{{ job_db.recruiter_id.phonenumber }}</li>
+                </ul>
+
+                <div class="card-footer text-right">
+                    <a href="{% url 'candidate.search_job' %}" class="btn btn-primary">Back</a>
+                    {% if applications_db.status == 'applied' %}
+                    <!-- seletion purpose using boostrap model -->
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                          Cancel
+                        </button>
+                    {% else %}
+                    <a href="{% url 'candidate.apply' job_db.jobs_id %}" class="btn btn-primary">Apply</a>
+                    {% endif %}
+                    
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+   
+</section>
+
+
+<!-- Modal Popup for cancel a job application purpose(deleting applications) -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <h6 class="modal-title" id="exampleModalLongTitle">
+            Do you really want to cancel these request? This process cannot be undone.
+          </h6>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-danger">Confirm</button> -->
+          <a href="{% url 'candidate.application_cancel' job_db.jobs_id %}" class="btn btn-danger">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

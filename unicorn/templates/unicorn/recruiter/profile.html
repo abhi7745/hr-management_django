@@ -1,0 +1,70 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Recruiter Profile
+{% endblock %}
+
+{% block sidebar %}
+{% include 'recruiter/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+<section class="section" unicorn:view>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="card">
+                <form>
+                    <div class="card-header">
+                        <h4>Recruiter Profile</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div  class="form-control border-0">{{ profile.email }}</div>
+                        </div> 
+                        <div class="form-group">
+                            <label>Company Name</label>
+                            <input unicorn:model.defer="profile.company_name" type="text" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Descripiton</label>
+                            <textarea unicorn:model.defer="profile.description" class="form-control {% if unicorn.errors.description %} is-invalid {% endif %}" required=""></textarea>
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.description.0.message }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">+91</span>
+                                </div>
+                            <input unicorn:model.defer="profile.phonenumber" type="text" class="form-control {% if unicorn.errors.phonenumber %} is-invalid {% endif %}">
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.phonenumber.0.message }}
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Address</label>
+                            <textarea  unicorn:model.defer="profile.address" class="form-control {% if unicorn.errors.address %} is-invalid {% endif %}" required=""></textarea>
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.address.0.message }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary" unicorn:click.prevent="save()">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

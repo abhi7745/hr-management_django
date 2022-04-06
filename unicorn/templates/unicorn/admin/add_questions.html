@@ -1,0 +1,168 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'hr_admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+<section class="section" unicorn:view>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="card">
+                <form>
+                    <div class="card-header">
+                        <h4>Add Question</h4>
+                    </div>
+                    <div class="card-body">
+
+
+                        <div class="form-group">
+                            <label>Select Technology</label>
+                            <select unicorn:model.defer="tech_category_id" name="" id="" class="form-control">
+                                <option value="" selected disabled>Select</option>
+                                {% for x in tech_db %}
+                                <option value="{{ x.id }}">{{ x.tech_name }}</option>
+                                {% endfor%}
+                                
+                            </select>
+
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'tech_category_id error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span>
+                            {% endif %}
+        
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Question</label>
+                            <textarea unicorn:model.defer="question" class="form-control {% if unicorn.errors.description %} is-invalid {% endif %}" required=""></textarea>
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'question error' or message.tags == 'same_ques_tech error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span>
+                            {% endif %}
+        
+                            {% endfor %}
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.description.0.message }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Option 1</label>
+                            <input unicorn:model.defer="option1" type="text" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'option1 error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span>
+                            {% endif %}
+        
+                            {% endfor %}
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Option 2</label>
+                            <input unicorn:model.defer="option2" type="text" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'option2 error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span>
+                            {% endif %}
+        
+                            {% endfor %}
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Option 3</label>
+                            <input unicorn:model.defer="option3" type="text" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'option3 error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span>
+                            {% endif %}
+        
+                            {% endfor %}
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Option 4</label>
+                            <input unicorn:model.defer="option4" type="text" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'option4 error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span>
+                            {% endif %}
+        
+                            {% endfor %}
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select Answer</label>
+                            <select unicorn:model.defer="answer" name="" id="" class="form-control">
+                                <option value="" selected disabled>Select</option>
+                                <option value="option1">Option 1</option>
+                                <option value="option2">Option 2</option>
+                                <option value="option3">Option 3</option>
+                                <option value="option4">Option 4</option>
+                            </select>
+
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'answer error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span>
+                            {% endif %}
+        
+                            {% endfor %}
+
+                           
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary" unicorn:click.prevent="save()">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'hr_admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+<section class="section" unicorn:view>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="card">
+                <form>
+                    <div class="card-header">
+                        <h4>Technology Update</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="form-group">
+                            <label>Tech Name</label>
+                            <input unicorn:model.defer="technology_db.tech_name" type="text" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'tech_name error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span><br>
+                            {% endif %}
+        
+                            {% endfor %}
+
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div>
+
+                            
+
+                            <label>Mark For Each Question</label>
+                            <input unicorn:model.defer="technology_db.question_mark" type="number" min="1" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+                            
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'question_mark_case1 error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span><br>
+                            {% endif %}
+
+                            {% comment %} case-2 {% endcomment %}
+                            {% if message.tags == 'question_mark_case2 error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span><br>
+                            {% endif %}
+
+                            {% if message.tags == 'tech_name error' %}
+        
+                            <span style="color:red;">Same mark exist
+                            </span><br>
+                            {% endif %}
+        
+                            {% endfor %}
+                            
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div>
+
+                            {% comment %} <label>Total Questions</label>
+                            <input unicorn:model.defer="profile.company_name" type="number" min="1" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div> {% endcomment %}
+
+                    </div>
+                    <div class="card-footer text-right">
+                        <td><a href="{% url 'admin.view_technology' %}" class="btn btn-primary">Back</a></td>
+                        {% comment %} seletion purpose using boostrap model {% endcomment %}
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                            Delete
+                          </button>
+                        <button class="btn btn-primary" unicorn:click.prevent="update()">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Modal Popup for deletion purpose -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <h6 class="modal-title" id="exampleModalLongTitle">
+            Do you really want to delete these record? It will completely delete all the related questions..!
+            <span style="text-decoration: underline  ;">This process cannot be undone.</span>
+          </h6>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-danger">Confirm</button> -->
+          <a href="{% url 'admin.delete_technology' technology_db.id  %}" class="btn btn-danger">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

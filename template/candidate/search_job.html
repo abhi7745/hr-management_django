@@ -1,0 +1,119 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Candidate Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'candidate/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+    
+
+    <div class="section-body">
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Available Jobs
+                  <!-- <a href="" style="margin-left: 10px;" class="btn btn-primary">Add
+                    <i style="margin-left: 15px;" class="fas fa-plus"></i>
+                  </a> -->
+                </h4>
+                <div class="card-header-form">
+                  <!-- Search form -->
+                    <form method="post" action="{% url 'candidate.search_job' %}">
+                        {% csrf_token %}
+                      <div class="input-group">
+                        <input style="{% if required %} border:1px solid red; {% endif %}" type="text" value="{{ search_key }}" class="form-control" name="search_key" placeholder="Search">
+                        <div class="input-group-btn">
+                          <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        </div>
+                      </div>
+                    </form>
+                    {% if required %}
+                    <label for="" style="margin-left: 15px;color:  red;"> Search Key Required</label>
+                    {% endif %}
+                  </div>
+
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped" id="table-2">
+                    <thead>
+                      <tr>
+                        <!-- <th class="text-center pt-3">
+                          <div class="custom-checkbox custom-checkbox-table custom-control">
+                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                              class="custom-control-input" id="checkbox-all">
+                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                          </div>
+                        </th> -->
+                        <th>Job title</th>
+                        <th>Min Exp.</th>
+                        <th>Max Exp.</th>
+                        <th>Min Salary</th>
+                        <th>Max Salary</th>
+                        <th>Location</th>
+                        <th>Vacancies</th>
+                        <th>Closing Date</th>
+                        <th>More</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% if not not_found %}
+                        {% for joblist in  joblist_db %}
+                      <tr>
+                        <!-- <td class="text-center pt-2">
+                          <div class="custom-checkbox custom-control">
+                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                              id="checkbox-1">
+                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                          </div>
+                        </td> -->
+
+                        <td>{{ joblist.job_title }}</td>
+
+                        <td>{{ joblist.min_experience }}</td>
+                        <td>{{ joblist.max_experience }}</td>
+                        <td>{{ joblist.min_salary }}</td>
+                        <td>{{ joblist.max_salary }}</td>
+                        <td>{{ joblist.location }}</td>
+                        <td>{{ joblist.vacancies_no }}</td>
+                        <td>{{ joblist.closing_date }}</td>
+
+                        
+                        
+                       
+                        <td><a href="{% url 'candidate.job_view' joblist.jobs_id %}" class="btn btn-primary">View</a></td>
+                        <!-- <td><a href="#" class="btn btn-primary">Delete</a></td> -->
+                      </tr>
+
+                      {% endfor %}
+
+                    {% endif %}
+                      
+                    </tbody>
+                  </table>
+                  
+                </div>
+              </div>
+
+              {% if not_found %}
+              <label for="" style="text-align: center !important;">Not Found</label><br>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+</section>
+
+{% endblock %}

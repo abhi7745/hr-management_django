@@ -1,0 +1,303 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>Radical Technologies</title>
+<!-- Bootstrap -->
+<link href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<!-- Font Awesome CSS-->
+<link href="{% static 'assets/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+<!-- Animate CSS -->
+<link href="{% static 'assets/animate/animate.css' %}" rel="stylesheet">
+<!-- Owl Carousel -->
+<link href="{% static 'assets/owl-carousel/css/owl.carousel.css' %}" rel="stylesheet">
+<link href="{% static 'assets/owl-carousel/css/owl.theme.css' %}" rel="stylesheet">
+<!-- magnific Css -->
+<link href="{% static 'assets/css/magnific-popup.css' %}" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<!-- Favicon -->
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Loader -->
+<!-- <div id="dvLoading"></div> -->
+<!-- Header Start -->
+<header class="wow fadeInDown" data-offset-top="197" data-spy="affix">
+  <div class="logo-wrapper"> 
+    <!-- Logo -->
+    <div class="container">
+      <div class="row"> 
+        <!-- Logo -->
+        <div class="col-sm-12 col-md-3 hidden-xs"> <a href="/"><img src="{% static 'images/RT-logo/logo.png' %}" alt="Radical Technologies"/></a> </div>
+        <!-- Navigation -->
+        <div class="col-sm-12 col-md-9">
+          <nav class="navbar navbar-default pull-right"> 
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+              <a class="navbar-brand" href="index.html"><img src="{% static 'images/RT-logo/logo.png' %}" alt="Radical Technologies"/></a> </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Home</a></li>
+
+                {% if not request.user.is_authenticated %}
+                <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  Signup </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'recruiter_signup_url' %}">Recruiter Signup</a></li>
+                    <li><a href="{% url 'candidate_signup_url' %}">Candidate Signup</a></li>
+                    <!-- <li><a href="404.html">404</a></li> -->
+                  </ul>
+                </li>
+                {% endif %}
+
+                <!-- <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  Login </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="login.html">Recruiter Login</a></li>
+                    <li><a href="login.html">Candidate Login</a></li>
+                    <li><a href="login.html">Admin Login</a></li>
+                   
+                  </ul>
+                </li> -->
+                
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'login_url' %}">Dashboard</a></li>
+                {% endif %}
+                
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Resume Templates</a></li>
+                
+                <!-- <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Current Jobs </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="current-jobs.html">Current Jobs</a></li>
+                    <li><a href="apply-job.html">Apply Job</a></li>
+                  </ul>
+                </li> -->
+
+                <!-- <li class="dropdown"><a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="blog-details.html">Blog Details</a></li>
+                  </ul>
+                </li> -->
+
+
+                <!-- <li><a href="contact-us.html">Contact Us</a></li> -->
+              </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+            <div class="user"><img src="{% static 'images/user-icon.png' %}" alt=""></div>
+
+            {% if not request.user.is_authenticated %}
+            <div class="login pull-right hidden-xs"> <a href="{% url 'login_url' %}">Login</a></div>
+            {% else %}
+            <div class="login pull-right hidden-xs"> <a href="{% url 'logout_url' %}">Logout</a></div>
+            {% endif %}
+            
+            
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Header End --> 
+
+<!-- main 'base.html' file for loading css,js, etc.. -->
+{% block content %}
+
+{% endblock %}
+
+<!-- Footer styles Start -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="footer-section">
+        <div class="col-sm-4">
+          <div class="single-secton">
+            <h3>Subscribe Our Newsletter</h3>
+            <div class="form">
+              <div class="form-group">
+                <input placeholder="Enter your Email" id="exampleInputName1" class="form-control first" type="text">
+              </div>
+              <input class="bttn" value="Subscribe" type="text">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="single-secton">
+            <h3>Follow us on</h3>
+            <ul>
+              <li class="facebook"><a href="javascript:void(0)"><i class="fa fa-facebook"></i></a></li>
+              <li class="twitter"><a href="javascript:void(0)"><i class="fa fa-twitter"></i></a></li>
+              <li class="linkedin"><a href="javascript:void(0)"><i class="fa fa-linkedin"></i></a></li>
+              <li class="google"><a href="javascript:void(0)"><i class="fa fa-google-plus"></i></a></li>
+              <li class="youtube"><a href="javascript:void(0)"><i class="fa fa-youtube-play"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="single-secton">
+            <h3>Need Help ?</h3>
+            <p><i class="fa fa-phone"></i> CALL US : <span>1800-0000-1234</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <div class="single-section-two"> <img src="{% static 'images\RT-logo\logo.png' %}" alt="">
+          <p>Duis ac turpis. Integer rutrum ante eu lacus. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada at, neque. Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Duis ac turpis. Integer rutrum ante eu lacus. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada at, neque. Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi.</p>
+        </div>
+      </div>
+
+      <!-- 1. site pages start -->
+      <div class="col-sm-3 col-md-2">
+        <div class="single-section-two white">
+          <h3>Company</h3>
+          <ul>
+            <!-- <li><a href="#">About Us</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact Us</a></li> -->
+            <li><a href="/">Home</a></li>
+            <li><a href="#">Jobs</a></li>
+            <li><a href="#">Resume Templates</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- site pages end -->
+
+      <!--2. For Candidates start -->
+      <div class="col-sm-3 col-md-2">
+        <div class="single-section-two white">
+          <h3>For Candidates</h3>
+          <ul>
+            <!-- <li><a href="#">How It Works</a></li>
+            <li><a href="#">Add Listing</a></li>
+            <li><a href="#">Popular Categories</a></li>
+            <li><a href="#">Popular Places</a></li>
+            <li><a href="#">FAQ</a></li> -->
+            <li><a href="#">Browse Jobs</a></li>
+            <li><a href="#">Browse Categories</a></li>
+            <li><a href="#">Submit Resume</a></li>
+            <li><a href="#">Candidate Dashboard</a></li>
+            <li><a href="#">Job Alerts</a></li>
+            <li><a href="#">My Bookmarks</a></li>
+          </ul>
+        </div>
+      </div>
+      <!--3. For Candidates end -->
+
+       <!-- For Employers start -->
+       <div class="col-sm-3 col-md-2">
+        <div class="single-section-two white">
+          <h3>For Candidates</h3>
+          <ul>
+            <li><a href="#">Browse Candidates</a></li>
+            <li><a href="#">Browse Categories</a></li>
+            <li><a href="#">Submit Resume</a></li>
+            <li><a href="#">Employer Dashboard</a></li>
+            <li><a href="#">Add Job</a></li>
+            <li><a href="#">Job Packages</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- For Employers end -->
+
+       <!--4. For Partner Sites start -->
+       <div class="col-sm-3 col-md-2">
+        <div class="single-section-two white">
+          <h3>Partner Sites</h3>
+          <ul>
+            <li><a href="#">Browse Candidates</a></li>
+            <li><a href="#">Browse Categories</a></li>
+            <li><a href="#">Submit Resume</a></li>
+            <li><a href="#">Employer Dashboard</a></li>
+            <li><a href="#">Add Job</a></li>
+            <li><a href="#">Job Packages</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- For Partner Sites end -->
+
+       <!--5. For Contact Us start -->
+       <div class="col-sm-3 col-md-2">
+        <div class="single-section-two white">
+          <h3>Contact Us</h3>
+          <ul>
+            <li><a href="#">214 West Arnold St. New York, NY 10002</a></li>
+            <li><a href="#">+(123) 345-6789</a></li>
+            <li><a href="#">support@joB.demo</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- For Partner Sites end -->
+
+
+
+      <!-- contact form start -->
+      <div class="col-sm-12 col-md-4">
+        <div class="single-section-two">
+          <h3>Get In Touch</h3>
+          <div class="form">
+            <form action="">
+            <div class="form-group">
+              <input placeholder="Enter your Name" id="exampleInputName2" class="form-control first" type="text">
+            </div>
+            <div class="form-group">
+              <input placeholder="Enter your Email" id="exampleInputEmail" class="form-control first" type="text">
+            </div>
+            <div class="form-group">
+              <input placeholder="Enter your Message" id="exampleInputMessage" class="form-control first message" type="text">
+              <input class="bttn" value="Subscribe" type="text">
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- Footer styles End --> 
+<!-- Copyright styles End -->
+<div class="copyright-wrapper">
+  <div class="container">
+    <p>&copy; Copyright 
+      <script type="text/javascript">
+	var d=new Date();
+	document.write(d.getFullYear());
+	</script> 
+      Radical Technologies | All Rights Reserved.</p>
+  </div>
+</div>
+<!-- Copyright styles End --> 
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="{% static 'assets/jquery/jquery-3.1.1.min.js' %} "></script> 
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %} "></script> 
+<script src="{% static 'assets/jquery/plugins.js' %} "></script> 
+<script src="{% static 'assets/jquery/jquery.animateNumber.min.js' %} "></script> 
+<script src="{% static 'assets/jquery/jquery.magnific-popup.min.js' %} "></script> 
+<script src="{% static 'assets/owl-carousel/js/owl.carousel.js' %} "></script> 
+<script src="{% static 'assets/wow/wow.min.js' %} "></script> 
+<script src="{% static 'js/custom.js' %} "></script>
+</body>
+</html>

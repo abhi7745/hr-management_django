@@ -1,0 +1,85 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'hr_admin/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+<section class="section" unicorn:view>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="card">
+                <form>
+                    <div class="card-header">
+                        <h4>Add Technology</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="form-group">
+                            <label>Tech Name</label>
+                            <input unicorn:model.defer="tech_name" type="text" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'tech_name error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span><br>
+                            {% endif %}
+        
+                            {% endfor %}
+
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div>
+
+                            
+
+                            <label>Mark For Each Question</label>
+                            <input unicorn:model.defer="question_mark" type="number" min="1" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+                            
+                            {% for message in messages  %}
+                    
+                            {% comment %} case-1 {% endcomment %}
+                            {% if message.tags == 'question_mark_case1 error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span><br>
+                            {% endif %}
+
+                            {% comment %} case-2 {% endcomment %}
+                            {% if message.tags == 'question_mark_case2 error' %}
+        
+                            <span style="color:red;">{{ message }}
+                            </span><br>
+                            {% endif %}
+        
+                            {% endfor %}
+                            
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div>
+
+                            {% comment %} <label>Total Questions</label>
+                            <input unicorn:model.defer="profile.company_name" type="number" min="1" class="form-control {% if unicorn.errors.company_name %} is-invalid {% endif %}" required="">
+                            <div class="invalid-feedback">
+                                {{ unicorn.errors.company_name.0.message }}
+                            </div> {% endcomment %}
+
+                    </div>
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary" unicorn:click.prevent="save()">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

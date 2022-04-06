@@ -1,0 +1,827 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Candidate Profile
+{% endblock %}
+
+{% block sidebar %}
+{% include 'candidate/sidebar.html' %}
+{% endblock %}
+
+
+{% comment %} {% block styles %}
+    
+{% endblock %}   {% endcomment %}
+
+
+{% block content %}
+<section class="section" unicorn:view>
+    
+    <div class="row ">
+
+        <div class="col-12 col-md-6 col-lg-6">
+    {% comment %} form start {% endcomment %}
+        <form>
+            <div class="card">
+              <div class="card-header">
+                <h4>Candidate Profile
+                </h4>
+              </div>
+              <div class="card-body">
+
+                <div class="form-group">
+                  <label>Name</label>
+                  <input unicorn:model.defer="candidate.name" type="text" class="form-control" required>
+                  {% for message in messages  %}
+                    {% if message.tags == 'name error' %}
+
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    
+                    {% endif %}
+                    {% endfor %}
+                  <div class="invalid-feedback">
+                    {{ unicorn.errors.job_title.0.message }}
+                </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Email</label>
+                  <div  class="form-control border-0">{{ candidate.email }} </div>
+              </div> 
+
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">+91</span>
+                      </div>
+                      <input unicorn:model.defer="candidate.phone" type="text" class="form-control {% if unicorn.errors.phonenumber %} is-invalid {% endif %}">
+                      
+                    
+                  <div class="invalid-feedback">
+                      {{ unicorn.errors.phonenumber.0.message }}
+                  </div>
+                </div>
+                
+                {% for message in messages  %}
+                    {% if message.tags == 'phone error' %}
+
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    {% endif %}
+
+                    {% if message.tags == 'phone_invalid error' %}
+
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    {% endif %}
+                {% endfor %}
+
+              </div>
+
+            {% if not candidate.experience_level == '' %}
+
+              <div class="form-group">
+                <label>Experience Level</label>
+                <select unicorn:model.defer="candidate.experience_level" name="" id="select_option" onchange="myFunction()" class="form-control">
+                    <option value="" selected disabled>Select</option>
+                  
+                    <option value="fresher" >Fresher</option>
+                    <option value="experienced" >Experienced</option>
+                  
+                    
+                </select>
+
+              {% for message in messages  %}
+        
+                {% comment %} case-1 {% endcomment %}
+                {% if message.tags == 'job_category_id error' %}
+
+                <span style="color:red;">{{ message }}
+                </span>
+                {% endif %}
+
+              {% endfor %}
+
+              
+              </div>
+              
+              {% comment %} ///////////////////////////////////////////////////////////////////// {% endcomment %}
+                  {% comment %} if case 1 {% endcomment %}
+                {% if candidate.experience_level == 'fresher' %}
+                  
+                  {% comment %} already a fresher candidate {% endcomment %}
+
+                  {% comment %} case 1 onload {% endcomment %}
+                  <div class="form-group" id="fresher">
+                    <label>Expected CTC</label>
+                    <input unicorn:model.defer="candidate.expected_ctc" type="number" min="1" class="form-control" required>
+                    
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                    </div>
+                  </div>
+                  
+                  {% comment %} case 2 onchange event {% endcomment %}
+                  <div id="experienced" id='experienced' style="display: none;">
+                    <div class="form-group" >
+                      <label>Companies worked</label>
+                      <textarea unicorn:model.defer="candidate.companies_experience" name="" id="" cols="30" rows="10" class="form-control" required></textarea>
+                      <div class="invalid-feedback">
+                        {{ unicorn.errors.job_title.0.message }}
+                    </div>
+                    </div>
+      
+                    <div class="form-group" >
+                      <label>Year of experience</label>
+                      <input unicorn:model.defer="candidate.year_of_exp" type="number" min="1" class="form-control" required>
+                      
+                      <div class="invalid-feedback">
+                        {{ unicorn.errors.job_title.0.message }}
+                    </div>
+                    </div>
+                    <div class="form-group" >
+                      <label>Current CTC</label>
+                      <input unicorn:model.defer="candidate.current_ctc" type="text" class="form-control" required>
+                      
+                      <div class="invalid-feedback">
+                        {{ unicorn.errors.job_title.0.message }}
+                    </div>
+                    </div>
+      
+                    <div class="form-group" >
+                      <label>Expected CTC</label>
+                      <input unicorn:model.defer="candidate.expected_ctc" type="text" class="form-control" required>
+                      
+                      <div class="invalid-feedback">
+                        {{ unicorn.errors.job_title.0.message }}
+                    </div>
+                    </div>
+      
+                    <div class="form-group">
+                      <label>Serving notice period</label>
+                    </div> 
+      
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label>From</label>
+                        <input type="date" unicorn:model.defer="candidate.notice_period_from"class="form-control" required>
+                      
+                        {% for message in messages  %}
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'min_exp error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+      
+                      {% comment %} case-2 {% endcomment %}
+                      {% if message.tags == 'min_exp_case2 error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                          
+                      {% endif %}
+      
+                      {% endfor %}
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label>To</label>
+                        <input type="date" unicorn:model.defer="candidate.notice_period_to" class="form-control" required>
+                        {% for message in messages  %}
+      
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'max_exp error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+      
+                      {% comment %} case-2 {% endcomment %}
+                      {% if message.tags == 'max_exp_case2 error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                          
+                      {% endif %}
+      
+                      {% endfor %}
+                      </div>
+                    </div>
+                    {% comment %} end {% endcomment %}
+                  </div>
+                  
+                {% endif %}
+
+
+                {% comment %} if case 2 {% endcomment %}
+                {% if candidate.experience_level == 'experienced' %}
+                  
+                {% comment %} already a experienced candidate {% endcomment %}             
+                
+                  {% comment %} case 1 onload {% endcomment %}
+                <div id="experienced">
+                  <div class="form-group" >
+                    <label>Companies worked</label>
+                    <textarea unicorn:model.defer="candidate.companies_experience" name="" id="" cols="30" rows="10" class="form-control" required></textarea>
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                  </div>
+    
+                  <div class="form-group" >
+                    <label>Year of experience</label>
+                    <input unicorn:model.defer="candidate.year_of_exp" type="number" min="1" class="form-control" required>
+                    
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                  </div>
+                  <div class="form-group" >
+                    <label>Current CTC</label>
+                    <input unicorn:model.defer="candidate.current_ctc" type="number" min="1" class="form-control" required>
+                    
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                  </div>
+    
+                  <div class="form-group" >
+                    <label>Expected CTC</label>
+                    <input unicorn:model.defer="candidate.expected_ctc" type="number" class="form-control" required>
+                    
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                  </div>
+    
+                  <div class="form-group">
+                    <label>Serving notice period</label>
+                  </div> 
+    
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>From</label>
+                      <input type="date" unicorn:model.defer="candidate.notice_period_from"class="form-control" required>
+                    
+                      {% for message in messages  %}
+                    {% comment %} case-1 {% endcomment %}
+                    {% if message.tags == 'min_exp error' %}
+    
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    {% endif %}
+    
+                    {% comment %} case-2 {% endcomment %}
+                    {% if message.tags == 'min_exp_case2 error' %}
+    
+                    <span style="color:red;">{{ message }}
+                    </span>
+                        
+                    {% endif %}
+    
+                    {% endfor %}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>To</label>
+                      <input type="date" unicorn:model.defer="candidate.notice_period_to" class="form-control" required>
+                      {% for message in messages  %}
+    
+                    {% comment %} case-1 {% endcomment %}
+                    {% if message.tags == 'max_exp error' %}
+    
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    {% endif %}
+    
+                    {% comment %} case-2 {% endcomment %}
+                    {% if message.tags == 'max_exp_case2 error' %}
+    
+                    <span style="color:red;">{{ message }}
+                    </span>
+                        
+                    {% endif %}
+    
+                    {% endfor %}
+                    </div>
+                  </div>
+                  {% comment %} end {% endcomment %}
+                </div>
+                {% comment %} case 2 onchange event {% endcomment %}
+                <div class="form-group" id="fresher" style="display: none;">
+                  <label>Expected CTC</label>
+                  <input unicorn:model.defer="candidate.expected_ctc" type="text" class="form-control" required>
+                  
+                  <div class="invalid-feedback">
+                    {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                </div> 
+
+                {% endif %}
+
+            {% endif %}
+              
+           
+            {% comment %} ////////////////////////////////////////////////////////////////////////////// {% endcomment %}
+            {% comment %} new candidate case {% endcomment %}
+            {% if candidate.experience_level == '' %}
+                  <h1>{{ candidate.experience_level }}</h1>
+                  <div class="form-group">
+                    <label>Experience Level</label>
+                    <select unicorn:model.defer="candidate.experience_level" name="" id="select_option" onchange="myFunction()" class="form-control select_case">
+                        <option value="" selected disabled>Select</option>
+                      
+                        <option value="fresher" >Fresher</option>
+                        <option value="experienced" >Experienced</option>
+                      
+                        
+                    </select>
+
+                    {% for message in messages  %}
+            
+                    {% comment %} case-1 {% endcomment %}
+                    {% if message.tags == 'experience_level error' %}
+
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    {% endif %}
+
+                    {% endfor %}
+
+                  
+                  </div>
+
+                {% comment %} select option related input fields for - fresher, Experienced  {% endcomment %}
+
+                {% comment %} fresher {% endcomment %}
+                <div class="form-group" id="fresher" style="display: none;">
+                  <label>Expected CTC</label>
+                  <input unicorn:model.defer="candidate.expected_ctc" type="text" class="form-control" required>
+                  
+                  <div class="invalid-feedback">
+                    {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                </div>
+
+                {% comment %} experienced {% endcomment %}
+                  <div id="experienced" style="display: none;">
+                    <div class="form-group" >
+                      <label>Companies worked</label>
+                      <textarea unicorn:model.defer="candidate.companies_experience" name="" id="" cols="30" rows="10" class="form-control" required></textarea>
+                      <div class="invalid-feedback">
+                        {{ unicorn.errors.job_title.0.message }}
+                    </div>
+                    </div>
+
+                    <div class="form-group" >
+                      <label>Year of experience</label>
+                      <input unicorn:model.defer="candidate.year_of_exp" type="text" class="form-control" required>
+                      
+                      <div class="invalid-feedback">
+                        {{ unicorn.errors.job_title.0.message }}
+                    </div>
+                    </div>
+                    <div class="form-group" >
+                      <label>Current CTC</label>
+                      <input unicorn:model.defer="candidate.current_ctc" type="text" class="form-control" required>
+                      
+                      <div class="invalid-feedback">
+                        {{ unicorn.errors.job_title.0.message }}
+                    </div>
+                    </div>
+
+                    <div class="form-group" >
+                      <label>Expected CTC</label>
+                      <input unicorn:model.defer="candidate.expected_ctc" type="text" class="form-control" required>
+                      
+                      <div class="invalid-feedback">
+                        {{ unicorn.errors.job_title.0.message }}
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Serving notice period</label>
+                    </div> 
+
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label>From</label>
+                        <input type="date" unicorn:model.defer="candidate.notice_period_from"class="form-control" required>
+                      
+                        {% for message in messages  %}
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'min_exp error' %}
+
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+
+                      {% comment %} case-2 {% endcomment %}
+                      {% if message.tags == 'min_exp_case2 error' %}
+
+                      <span style="color:red;">{{ message }}
+                      </span>
+                          
+                      {% endif %}
+
+                      {% endfor %}
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label>To</label>
+                        <input type="date" unicorn:model.defer="candidate.notice_period_to" class="form-control" required>
+                        {% for message in messages  %}
+
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'max_exp error' %}
+
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+
+                      {% comment %} case-2 {% endcomment %}
+                      {% if message.tags == 'max_exp_case2 error' %}
+
+                      <span style="color:red;">{{ message }}
+                      </span>
+                          
+                      {% endif %}
+
+                      {% endfor %}
+                      </div>
+                    </div>
+                    {% comment %} end {% endcomment %}
+                  </div>
+
+              {% comment %} select option related input fields for - fresher, Experienced end {% endcomment %}
+            {% endif %}
+            
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Willing to work in Shifts</label>
+                      <select unicorn:model.defer="candidate.willingtowork_shifts" name="" id="" class="form-control">
+                          <option value="" selected disabled>Select</option>
+                        
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        
+                          
+                      </select>
+                    {% for message in messages  %}
+                    {% comment %} case-1 {% endcomment %}
+                    {% if message.tags == 'shifts error' %}
+
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    {% endif %}
+
+                    {% endfor %}
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Willing to work as Contract</label>
+                      <select unicorn:model.defer="candidate.willingtowork_contract" name="" id="" class="form-control">
+                          <option value="" selected disabled>Select</option>
+                        
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        
+                          
+                      </select>
+                    {% for message in messages  %}
+
+                    {% comment %} case-1 {% endcomment %}
+                    {% if message.tags == 'contract error' %}
+
+                    <span style="color:red;">{{ message }}
+                    </span>
+                    {% endif %}
+
+                    {% endfor %}
+                    </div>
+                  </div>
+
+                
+                  
+
+                  <div class="form-group">
+                    <label>Qualification</label>
+                    <input unicorn:model.defer="candidate.qualification" type="text" class="form-control" required="">
+                    {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'qualification error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% endfor %}
+                    <div class="invalid-feedback">
+                        {{ unicorn.errors.company_name.0.message }}
+                    </div>
+                </div>
+
+                  <div class="form-group">
+                    <label>Address</label>
+                    <textarea unicorn:model.defer="candidate.address" name="" id="" cols="30" rows="10" class="form-control" required=""></textarea>
+                    {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'address error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% endfor %}
+                    <div class="invalid-feedback">
+                        {{ unicorn.errors.company_name.0.message }}
+                    </div>
+                </div>
+                
+
+              </div>
+            </div>
+
+        
+        </div>
+
+        {% comment %} form continue {% endcomment %}
+        <div class="col-12 col-md-6 col-lg-6" id="second_form">
+            
+            <div class="card">
+
+                <div class="card-body">
+
+                  <div class="form-group">
+                    <label>Primary skill</label>
+                    <input unicorn:model.defer="candidate.primary_skill" type="text" class="form-control" required>
+                    {% for message in messages  %}
+                      {% if message.tags == 'primary_skill error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      
+                      {% endif %}
+                      {% endfor %}
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                  </div>
+      
+                  <div class="form-group">
+                    <label>Primary skill Rating (Out of 5) </label>
+                    <input unicorn:model.defer="candidate.primary_skill_rating" type="number" min="1" max="5" class="form-control" required>
+                    {% for message in messages  %}
+                      {% if message.tags == 'primary_skill_rating error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      
+                      {% endif %}
+
+                      {% if message.tags == 'primary_skill_rating_invalid error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      
+                      {% endif %}
+                      {% endfor %}
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                  </div>
+      
+                  <div class="form-group">
+                    <label>Secondary skill</label>
+                    <input unicorn:model.defer="candidate.secondary_skill" type="text" class="form-control" required>
+                    {% for message in messages  %}
+                      {% if message.tags == 'secondary_skill error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      
+                      {% endif %}
+                      {% endfor %}
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                  </div>
+      
+                  <div class="form-group">
+                    <label>Secondary skill Rating (Out of 5)</label>
+                    <input unicorn:model.defer="candidate.secondary_skill_rating" type="number" min="1" max="5"  class="form-control" required>
+                    {% for message in messages  %}
+                      {% if message.tags == 'secondary_skill_rating error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      
+                      {% endif %}
+
+                      {% if message.tags == 'secondary_skill_rating_invalid error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      
+                      {% endif %}
+                      {% endfor %}
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                  </div>
+      
+                  <div class="form-group">
+                    <label>Other skill</label>
+                    <input unicorn:model.defer="candidate.other_skill" type="text" class="form-control" required>
+                    {% for message in messages  %}
+                      {% if message.tags == 'other_skill error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      
+                      {% endif %}
+                      {% endfor %}
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                  </div>
+      
+                  <div class="form-group">
+                    <label>Other skill Rating (Out of 5)</label>
+                    <input unicorn:model.defer="candidate.other_skill_rating" type="number" min="1" max="5" class="form-control" required>
+                    {% for message in messages  %}
+                      {% if message.tags == 'other_skill_rating error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      
+                      {% endif %}
+
+                      {% if message.tags == 'other_skill_rating_invalid error' %}
+      
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      
+                      {% endif %}
+                      {% endfor %}
+                    <div class="invalid-feedback">
+                      {{ unicorn.errors.job_title.0.message }}
+                  </div>
+                  </div>
+                    
+                  
+                    
+                    <div class="form-group">
+                        <label>Certification</label>
+                        <input type="text" unicorn:model.defer="candidate.certification" class="form-control">
+                      {% for message in messages  %}
+                    
+                      {% comment %} case-1 {% endcomment %}
+                      {% if message.tags == 'certification error' %}
+  
+                      <span style="color:red;">{{ message }}
+                      </span>
+                      {% endif %}
+  
+                      {% endfor %}
+                    </div>
+                    
+
+                    <div class="card-footer text-right">
+                        <button id="btn" style="{% if candidate.experience_level == 'fresher' %} margin-top: 91px; {% endif %}
+                        {% if candidate.experience_level == 'experienced' %} margin-top: 546px; {% endif %}"
+                         class="btn btn-primary" unicorn:click.prevent="save()">Save</button>
+                    </div>
+
+                 
+  
+               
+                </div>
+
+           
+              
+            </div>
+        </form>
+    {% comment %} form end {% endcomment %}
+
+          
+        
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% comment %} onload to style from margin {% endcomment %}
+{% comment %} <scripts>
+  window.onload = (event) => {
+    alert('page is fully loaded');
+    
+    {% if candidate.experience_level == 'fresher' %}
+
+      document.getElementById('btn').style.margin = "91px 0px 0px 0px";
+
+    {% endif %}
+
+    {% if candidate.experience_level == 'experienced' %}
+
+      document.getElementById('btn').style.margin = "546px 0px 0px 0px";
+
+    {% endif %}
+
+  };
+</scripts> {% endcomment %}
+{% comment %} 
+
+<script>
+  // for (fresher, experienced) input section purpose
+  function myFunction_db(){
+    alert('select_from_db');
+
+    var x = document.getElementById("select_from_db").value;
+    //alert(x);
+
+    if (x == 'fresher') 
+      {
+        document.getElementById('fresher').style.display='block';
+        document.getElementById('btn').style.margin = "91px 0px 0px 0px";
+      }
+      else {
+        document.getElementById('fresher').style.display='none';
+      }
+
+      if (x == 'experienced')
+      {
+        document.getElementById('experienced').style.display='block';
+        document.getElementById('btn').style.margin = "546px 0px 0px 0px";
+      }
+      else {
+        document.getElementById('experienced').style.display='none';
+      }
+
+
+      return;
+  }
+</script> {% endcomment %}
+
+
+
+<script>
+  // for (fresher, experienced) input section purpose
+  function myFunction(){
+    //alert('hai');
+
+    var x = document.getElementById("select_option").value;
+    //alert(x);
+
+    if (x == 'fresher') 
+      {
+        document.getElementById('fresher').style.display='block';
+        document.getElementById('btn').style.margin = "91px 0px 0px 0px";
+      }
+      else {
+        document.getElementById('fresher').style.display='none';
+      }
+
+      if (x == 'experienced')
+      {
+        document.getElementById('experienced').style.display='block';
+        document.getElementById('btn').style.margin = "546px 0px 0px 0px";
+      }
+      else {
+        document.getElementById('experienced').style.display='none';
+      }
+
+
+      return;
+  }
+</script>
+
+{% comment %} datepicker 1 {% endcomment %}
+{% comment %} <script>
+   
+        //enableTime: true,
+        //altInput: true,
+        //minDate: "today",
+        //altFormat: 'F j, Y (h:S K)',
+        //theme: "material_blue", 
+
+    flatpickr("#date_validator", {
+        altInput: true,
+        minDate: "today"
+    });
+
+    flatpickr("#time_validator", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "h:S K"
+    }); 
+
+    
+</script> {% endcomment %}
+
+{% endblock %}

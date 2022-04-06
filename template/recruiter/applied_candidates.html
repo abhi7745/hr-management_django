@@ -1,0 +1,135 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Recruiter Profile
+{% endblock %}
+
+{% block sidebar %}
+{% include 'recruiter/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+<section class="section" unicorn:view>
+
+
+    <!-- <div class="row ">
+        {% for applications in total_applications %}
+        <div class="col-xl-2 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="card">
+            <div class="card-statistic-4">
+              <div class="align-items-center justify-content-between">
+                <div class="row ">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                    <div class="card-content">
+                      <h5 class="font-15">{{ applications.job_id__job_title }}</h5>
+                      <h2 class="mb-3 font-18">{{ applications.job_id}}</h2>
+                      <p class="mb-0"><span class="col-green">10%</span> Increase</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                    <div class="banner-img">
+                      <img src="assets/img/banner/1.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        {% endfor %}
+    </div> -->
+    
+  
+    <div class="section-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Applied Candidates
+                      <!-- <a href="{% url 'recruiter.scheduletest' %}" style="margin-left: 10px;" class="btn btn-primary">Add
+                        <i style="margin-left: 15px;" class="fas fa-plus"></i>
+                      </a> -->
+                    </h4>
+                    <div class="card-header-form">
+                      <!-- Search form -->
+                        <form method="post" action="{% url 'recruiter.applied_candidates' %}">
+                          {% csrf_token %} 
+                          <div class="input-group">
+                            <input type="text" value="{{ search_key}}" style="{% if required %} border:1px solid red; {% endif %}" name="search_key" class="form-control" placeholder="Search">
+                            <div class="input-group-btn">
+                              <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                            </div>
+                          </div>
+                        </form>
+                        {% if required %}
+                        <label for="" style="margin-left: 15px;color:  red;"> Search Key Required</label>
+                        {% endif %}
+                      </div>
+    
+                  </div>
+              
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped" id="table-2">
+                    <thead>
+                      <tr>
+                        <!-- <th class="text-center pt-3">
+                          <div class="custom-checkbox custom-checkbox-table custom-control">
+                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                              class="custom-control-input" id="checkbox-all">
+                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                          </div>
+                        </th> -->
+                        <th>Job Domain</th>
+                        <th>Candidate Name</th>
+                        <th>Qualification</th>
+                        <th>Experience</th>
+                        <th>Mobile</th>
+                        <th>More</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for application_list in application_db %}
+                        
+                      <tr>
+                        <!-- <td class="text-center pt-2">
+                          <div class="custom-checkbox custom-control">
+                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                              id="checkbox-1">
+                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                          </div>
+                        </td> -->
+
+                        <td>{{ application_list.job_id.job_title }}</td>
+
+                        <td>{{ application_list.candidate_id.name }}</td>
+
+                        <td>{{ application_list.candidate_id.qualification }}</td>
+                        
+                        <td>{{ application_list.candidate_id.experience_level }}</td>
+
+                        <td>{{ application_list.candidate_id.phone }}</td>
+
+                        <td><a href="{% url 'recruiter.candidate_view' application_list.candidate_id.id %}" class="btn btn-primary">Detail</a></td>
+                      </tr>
+
+                      {% endfor %}
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {% if not_found %}
+              <label for="" style="text-align: center !important;">Not Found</label><br>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+</section>
+
+{% endblock %}

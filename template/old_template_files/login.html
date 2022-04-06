@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- breadcrumb Wrapper Start -->
+<div class="breadcrumb-wrapper">
+  <div class="container">
+    <div class="banner-title">
+      <h2 style="color: black;">Login</h2>
+      <div class="line"> <span></span></div>
+    </div>
+    <ul class="inner-breadcrumb">
+      <li><a href="index.html">Home</a></li>
+      <!-- <li>Login / Sign Up</li> -->
+      <li>Login</li>
+    </ul>
+  </div>
+</div>
+<!-- breadcrumb Wrapper End --> 
+
+<!-- Inner page Wrapper Start -->
+<div class="inner-page-wrapper registration-wrapper">
+  <div class="container">
+    <div class="row" >
+      <div class="col-sm-6" >
+        <div class="login-container" >
+
+            <!-- media query added in last line , id="login-div"-->
+          <div class="loginbox" style="transform: translate();" id="login-div">
+            <div class="loginbox-title">Login in using social accounts</div>
+            <ul class="social-network social-circle onwhite">
+              <li><a href="javascript:void(0)" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="javascript:void(0)" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="javascript:void(0)" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a></li>
+              <li><a href="javascript:void(0)" class="icoLinkedin" title="Linkedin +"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+            <div class="loginbox-or">
+              <div class="or-line"></div>
+              <div class="or">OR</div>
+            </div>
+
+            {% if user_error %}
+           
+              <div class="loginbox-title">{{user_error}}</div>
+            
+            {% endif %}
+
+            {% if reg_success %}
+           
+              <div class="loginbox-title">{{reg_success}}</div>
+            
+            {% endif %}
+
+            <!-- login form -->
+            <form method="post" action="{% url 'login_url' %}" class="form-group">
+              {% csrf_token %}
+            <div class="form-group">
+              <label>Email: <span class="required">*</span></label>
+              <input name="email" placeholder="email" class="form-control" value="{{static_mail}}" type="text">
+            </div>
+            <div class="form-group">
+              <label>Password: <span class="required">*</span></label>
+              <input name="password" placeholder="password" class="form-control" type="password">
+            </div>
+            <div class="loginbox-forgot"> <a href="">Forgot Password?</a> </div>
+            <div class="loginbox-submit">
+              <!-- <input class="btn btn-default btn-block" value="Login" type="button"> -->
+              <button class="btn btn-default btn-block" type="submit">Login</button>
+            </div>
+            </form>
+
+            <div class="loginbox-signup"> <a href="javascript:void(0)">Sign Up With Email</a> </div>
+          
+          </div>
+        </div>
+      </div>
+
+
+      <!-- <div class="col-sm-6">
+        <div class="login-container">
+          <div class="loginbox">
+            <div class="form-group">
+              <label>Username: <span class="required">*</span></label>
+              <input placeholder="" class="form-control" type="text">
+            </div>
+            <div class="form-group">
+              <label>Email: <span class="required">*</span></label>
+              <input placeholder="" class="form-control" type="email">
+            </div>
+            <div class="form-group">
+              <label>Password: <span class="required">*</span></label>
+              <input placeholder="" class="form-control" type="password">
+            </div>
+            <div class="form-group">
+              <label>Confirm Password: <span class="required">*</span></label>
+              <input placeholder="" class="form-control" type="password">
+            </div>
+            <div class="loginbox-forgot">
+              <input type="checkbox">
+              I accept <a href="">Term and consitions?</a> </div>
+            <div class="loginbox-submit">
+              <input class="btn btn-default btn-block" value="Register" type="button">
+            </div>
+            <div class="loginbox-signup"> Already have account <a href="javascript:void(0)">Sign in</a> </div>
+          </div>
+        </div>
+      </div> -->
+
+
+    </div>
+  </div>
+</div>
+<!-- Inner page Wrapper End --> 
+
+{% endblock %}
+
+
+<!-- <style>
+    @media screen and (max-width:400px) {
+        #login-div{
+            transform: translate(0%) !important;
+            /* left: 0% !important;
+            margin-left: 0% !important; */
+            /* background:blueviolet; */
+        }
+        
+    }
+</style> -->

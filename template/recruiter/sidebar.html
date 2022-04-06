@@ -1,0 +1,39 @@
+<aside id="sidebar-wrapper">
+    <div class="sidebar-brand">
+        <a href="/"> <img alt="" src="assets/img/logo.png" class="header-logo" /> <span
+                class="logo-name">Recruiter</span>
+        </a>
+    </div>
+    <ul class="sidebar-menu">
+        <li class="menu-header">Main</li>
+        <li class="dropdown {% if request.resolver_match.url_name == 'recruiter.dashboard' %} active {% endif %}">
+            <a href="{% url 'recruiter.dashboard' %}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+        </li>
+        <li class="dropdown {% if request.resolver_match.url_name == 'recruiter.profile' %} active {% endif %}">
+            <a href="{% url 'recruiter.profile' %}" class="nav-link"><i data-feather="user"></i><span>Profile</span></a>
+        </li>
+        <li class="dropdown ">
+            <a href="{% url 'recruiter.jobpost' %}" class="nav-link"><i data-feather="plus"></i><span>Jobs</span></a>
+        </li>
+        <li class="dropdown ">
+            <a href="{% url 'recruiter.joblist' %}" class="nav-link"><i data-feather="list"></i><span>Jobs List</span></a>
+        </li>
+        <li class="dropdown ">
+            <a href="{% url 'recruiter.scheduletest' %}" class="nav-link"><i data-feather="clock"></i><span>Schedule Test</span></a>
+        </li>
+        <li class="dropdown ">
+            <a href="{% url 'recruiter.schedulelist' %}" class="nav-link"><i data-feather="list"></i><span>Schedule List</span></a>
+        </li>
+        <li class="dropdown ">
+            <a href="{% url 'recruiter.applied_candidates' %}" class="nav-link"><i data-feather="user-check"></i><span>Applied candidates</span></a>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="menu-toggle nav-link has-dropdown"><i
+                    data-feather="briefcase"></i><span>Widgets</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="widget-chart.html">Chart Widgets</a></li>
+                <li><a class="nav-link" href="widget-data.html">Data Widgets</a></li>
+            </ul>
+        </li>
+    </ul>
+</aside>

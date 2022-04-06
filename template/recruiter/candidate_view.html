@@ -1,0 +1,180 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Recruiter Profile
+{% endblock %}
+
+{% block sidebar %}
+{% include 'recruiter/sidebar.html' %}
+{% endblock %}
+
+
+{% comment %} {% block styles %}
+    
+{% endblock %}   {% endcomment %}
+
+
+{% block content %}
+<section class="section" unicorn:view>
+    
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="padding-20">
+              
+            <ul class="nav nav-tabs" id="myTab2" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#about" role="tab"
+                  aria-selected="true">Candidate Details</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#settings" role="tab"
+                  aria-selected="false">Setting</a>
+              </li> -->
+            </ul>
+
+            <div class="tab-content tab-bordered" id="myTab3Content">
+
+              <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab2">
+                
+                  <div class="section-title">
+                    <span style="font-size: 29px;">{{ candidate.name }}</span>
+                    <br> 
+                  </div>
+
+                <div class="row">
+                 
+                  <div class="col-md-3 col-6 b-r">
+                    <strong>Education</strong>
+                    <br>
+                    <!-- <p class="text-muted"><span>{{ candidate.min_experience }}</span> - <span>{{ candidate.max_experience }}</span> Years</p> -->
+                    <p class="text-muted">{{ candidate.qualification }}</p> 
+                  </div>
+                  
+                  <div class="col-md-3 col-6">
+                    <strong>Location</strong>
+                    <br>
+                    <p class="text-muted">{{ candidate.address }}</p>
+                  </div>
+                  <div class="col-md-3 col-6">
+                    <strong>Willing to work shifts</strong>
+                    <br>
+                    <p class="text-muted">{{ candidate.willingtowork_shifts }}</p>
+                  </div>
+
+                  <div class="col-md-3 col-6">
+                    <strong>Willing to work contract</strong>
+                    <br>
+                    <p class="text-muted">{{ candidate.willingtowork_contract }}</p>
+                  </div>
+
+                  <div class="col-md-3 col-6">
+                    <strong>Primary Skill</strong>
+                    <br>
+                    <p class="text-muted">{{ candidate.primary_skill }} | Rating : {{ candidate.primary_skill_rating }} <sup><i style="color: gold;" class="fas fa-star"></i></sup></p>
+                  </div>
+
+                  <div class="col-md-3 col-6">
+                    <strong>Secondary Skill</strong>
+                    <br>
+                    <p class="text-muted">{{ candidate.secondary_skill }} | Rating : {{ candidate.secondary_skill_rating }} <sup><i style="color: gold;" class="fas fa-star"></i></sup></p>
+                  </div>
+
+                  <div class="col-md-3 col-6">
+                    <strong>Other Skill</strong>
+                    <br>
+                    <p class="text-muted">{{ candidate.other_skill }} | Rating : {{ candidate.other_skill_rating }} <sup><i style="color: gold;" class="fas fa-star"></i></sup></p>
+                  </div>
+
+                </div>
+
+               
+                
+                <div class="section-title">Experience</div>
+                {% if candidate.experience_level == 'fresher' %}
+                    
+                <ul style="list-style-type: none;">
+                    <label style="font-weight: bold;">Fresher</label> <br>
+                    <label style="font-weight: bold;">Expected CTC : </label> <span>{{ candidate.expected_ctc }}</span>
+                </ul>
+                {% else %}
+                    
+                    <ul style="list-style-type: none;">
+                      <label style="font-weight: bold;">Worked Companies : </label> <span>{{ candidate.companies_experience }}</span><br>
+                      <label style="font-weight: bold;">Year of Experience : </label> <span>  {{ candidate.year_of_exp }}</span><br>
+                      <label style="font-weight: bold;">Current CTC : </label> <span>{{ candidate.current_ctc }}</span><br>
+                      <label style="font-weight: bold;">Expected CTC : </label>  <span>{{ candidate.expected_ctc }}</span>
+                      
+                      
+                     
+                    </ul>
+                {% endif %}
+
+                {% if candidate.certification %}
+                <div class="section-title">Certification</div>
+                <ul>
+                  <li>{{ candidate.certification }}</li>
+                </ul>
+                {% endif%}
+
+
+                <div class="section-title">Contact</div>
+                <ul>
+                    <li>{{ candidate.address }}</li>
+                    <li>{{ candidate.email }}</li>
+                    <li>{{ candidate.phone }}</li>
+                </ul>
+
+                <div class="card-footer text-right">
+                    
+                    <!-- seletion purpose using boostrap model -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">
+                        Reject
+                    </button>
+                    
+                    <a href="{% url 'candidate.search_job' %}" class="btn btn-primary">Back</a>
+                    <a href="" class="btn btn-primary">Short list</a>
+                 
+                    
+                    
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+   
+</section>
+
+
+<!-- Modal Popup for cancel a job application purpose(deleting applications) -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          <h6 class="modal-title" id="exampleModalLongTitle">
+            Do you really want to cancel these request? This process cannot be undone.
+          </h6>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-danger">Confirm</button> -->
+          <a href="" class="btn btn-danger">Confirm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

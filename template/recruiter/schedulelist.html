@@ -1,0 +1,98 @@
+{% extends 'app.html' %}
+
+{% block title %}
+Recruiter Dashboard
+{% endblock %}
+
+{% block sidebar %}
+{% include 'recruiter/sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+    
+
+    <div class="section-body">
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h4>Schedule List
+                  <a href="{% url 'recruiter.scheduletest' %}" style="margin-left: 10px;" class="btn btn-primary">Add
+                    <i style="margin-left: 15px;" class="fas fa-plus"></i>
+                  </a>
+                </h4>
+                <div class="card-header-form">
+                  <!-- Search form -->
+                    <form>
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                          <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped" id="table-2">
+                    <thead>
+                      <tr>
+                        <!-- <th class="text-center pt-3">
+                          <div class="custom-checkbox custom-checkbox-table custom-control">
+                            <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
+                              class="custom-control-input" id="checkbox-all">
+                            <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                          </div>
+                        </th> -->
+                        <th>Job Category</th>
+                        <th>Test Date</th>
+                        <th>Descripiton</th>
+                        <th>More</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for x in test_schedule_db %}
+                      <tr>
+                        <!-- <td class="text-center pt-2">
+                          <div class="custom-checkbox custom-control">
+                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
+                              id="checkbox-1">
+                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                          </div>
+                        </td> -->
+
+                        <td>{{x.job_id}}</td>
+
+                        <td>{{x.date}}</td>
+                        <td>{{x.description}}</td>
+                        
+                        
+                        
+                       
+                        <td><a href="{% url 'recruiter.updateschedule' x.id %}" class="btn btn-primary">Edit</a></td>
+                        <!-- <td><a href="#" class="btn btn-primary">Delete</a></td> -->
+                      </tr>
+
+                      {% endfor %}
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+</section>
+
+{% endblock %}
